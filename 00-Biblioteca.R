@@ -1,10 +1,4 @@
 
-source("./auxBib.R")
-
-# endereco <- file.choose()
-dados <- read.csv("./SistemaBibliotecasUFC_alunos.csv", header = TRUE, 
-                  sep = ",", dec = ".", encoding = "UTF-8")  # ler o arquivo
-
 Gerar_Matriz_Ajustada <- function(dados, salvar = TRUE) {
   
   
@@ -42,10 +36,10 @@ Gerar_Matriz_Ajustada <- function(dados, salvar = TRUE) {
   freq_aux <- function(x){
     if(is.numeric(x)){
       aux <- cbind(colSums(x),round(colSums(x)/nrow(dados)*100,1))
-      colnames(aux) <- c("Frequ?ncia","%")
+      colnames(aux) <- c("Frequência","%")
     }else{
       aux <- cbind(table(x), round(table(x)/nrow(dados)*100,1))
-      colnames(aux) <- c("Frequ?ncia","%")
+      colnames(aux) <- c("Frequência","%")
     }
     return(aux)
   }
@@ -54,10 +48,5 @@ Gerar_Matriz_Ajustada <- function(dados, salvar = TRUE) {
   invisible(list(Matriz = matriz,  Lista = lista, Frequencia = frequencia))
 }
 
-## s? para as quest?es 2 e 9
-a <- Gerar_Matriz_Ajustada(dados,salvar = TRUE)
 
 
-
-a
-# for(i in nitens) {print(a$Tabela[j:i+j-1,]);j<-i+1}
