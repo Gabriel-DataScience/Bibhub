@@ -40,7 +40,7 @@ Gerar_matriz_binaria <- function(x, j, dados) {
     for (i in 2:nlevel) {
       matriz <- cbind(matriz, sim_ou_nao(separacao, nameslevels[i]))
     }
-#    colnames(matriz) <- paste0("V", j, ": ", nameslevels)
+#    colnames(matriz) <- paste0("V", j, ": ", nameslevels) 
     colnames(matriz) <- paste0(nameslevels)
   }
   
