@@ -35,11 +35,11 @@ Gerar_Matriz_Ajustada <- function(dados, salvar = TRUE) {
   # frequ?ncia e percentual
   freq_aux <- function(x){
     if(is.numeric(x)){
-      aux <- cbind(colSums(x),round(colSums(x)/nrow(dados)*100,1))
-      colnames(aux) <- c("Frequência","%")
+      aux <- cbind(colnames(x), colSums(x, na.rm = TRUE),round(colSums(x, na.rm = TRUE)/nrow(dados)*100,1))
+      colnames(aux) <- c("Opções","Frequência","%")
     }else{
-      aux <- cbind(table(x), round(table(x)/nrow(dados)*100,1))
-      colnames(aux) <- c("Frequência","%")
+      aux <- cbind(names(table(x)), table(x), round(table(x)/nrow(dados)*100,1))
+      colnames(aux) <- c("Opções","Frequência","%")
     }
     return(aux)
   }
