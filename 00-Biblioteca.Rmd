@@ -4,12 +4,7 @@ author: "Gabriel Fernandes Gomes"
 header-includes:
  - \usepackage{caption}
  - \usepackage[brazil]{babel}
-output: 
-  pdf_document :
-  fig_caption: yes
-  fig_height: 5
-  fig_width: 15
-  highlight: kate
+output: pdf_document
 ---
 
 ```{r , echo = FALSE, message = FALSE, warning=FALSE}
@@ -40,10 +35,6 @@ Resultado <- Gerar_Matriz_Ajustada(dados,salvar = TRUE)
 require(knitr)
 Nome_var <- names(Resultado$Frequencia)
 for(i in 1:length(Nome_var))
-print(kable(Resultado$Frequencia[[i]], caption = paste( Nome_var[i])))
+print(kable(Resultado$Frequencia[[i]], caption = paste( Nome_var[i]), row.names = FALSE ))
 ```
-
-
-
-
 
