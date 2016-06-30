@@ -23,7 +23,7 @@ Gerar_matriz_binaria <- function(x, j, dados) {
     x <- na.exclude(x)
   })
   separacao <- lapply(separacao, function(x) str_trim(x, side = "left"))    # tira todos os espaços do início do vetor
-  separacao <- lapply(separacao, function(x){if(length(x)==0) x<-NA else x<-x})   # transforma em NA os campos vazios
+  separacao <- lapply(separacao, function(x){if( all(nchar(gsub(" ","",x)) == 0) ) x<-NA else x<-x})   # transforma em NA os campos vazios
   
   
   nlevel <- length(levels(as.factor(unlist(separacao))))    # número de itens
@@ -40,7 +40,7 @@ Gerar_matriz_binaria <- function(x, j, dados) {
     for (i in 2:nlevel) {
       matriz <- cbind(matriz, sim_ou_nao(separacao, nameslevels[i]))
     }
-#    colnames(matriz) <- paste0("V", j, ": ", nameslevels) 
+#    colnames(matriz) <- paste0("V", j, ": ", nameslevels)
     colnames(matriz) <- paste0(nameslevels)
   }
   

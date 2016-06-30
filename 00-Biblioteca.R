@@ -35,15 +35,36 @@ Gerar_Matriz_Ajustada <- function(dados, salvar = TRUE) {
   # frequ?ncia e percentual
   freq_aux <- function(x){
     if(is.numeric(x)){
-      aux <- cbind(colnames(x), colSums(x, na.rm = TRUE),round(colSums(x, na.rm = TRUE)/nrow(dados)*100,1))
-      colnames(aux) <- c("Opções","Frequência","%")
+      soma <- as.numeric( colSums(x, na.rm = TRUE) )
+      somaperc <- as.numeric( round( colSums( x, na.rm = TRUE) / nrow(dados)*100,1) )
+      somapercvalid <- as.numeric( round( colSums( x, na.rm = TRUE) / nrow(na.exclude(x))*100,1) )
+      aux <- data.frame(c(colnames(x),"TOTAL"), c(soma, sum(soma)) ,
+                        c(somaperc, sum(somaperc) ), c( somapercvalid, sum(somapercvalid) ) )
+      colnames(aux) <- c("Opções","Frequência","%","% Válido")
+      #rownames(aux) <- NULL
     }else{
-      aux <- cbind(names(table(x)), table(x), round(table(x)/nrow(dados)*100,1))
-      colnames(aux) <- c("Opções","Frequência","%")
+      soma <- as.numeric(table(x))
+      somaperc <- as.numeric( round( table(x) / nrow( dados )*100,1))
+      somapercvalid <- as.numeric( round( table(x) / nrow( na.exclude(x) )*100,1))
+      aux <- data.frame(c( names(table(x) ),"TOTAL"), c( soma, sum( soma ) ) , 
+                        c( somaperc, round(sum( table(x) / nrow( dados )*100),2 ) ), 
+                        c( somapercvalid, round(sum(table(x) / nrow( na.exclude(x) )*100),2 ) ) )
+      colnames(aux) <- c("Opções","Frequência","%","% Válido")
+      #rownames(aux) <- NULL
     }
+    #aux <- rbind(aux,c("TOTAL",sum(aux[,2]),sum(aux[,3])))
     return(aux)
   }
   frequencia <- lapply(lista, freq_aux)
+  frequencia2 <- lapply(seq(frequencia),
+                        function(i) {
+                                    y <- data.frame(frequencia[[i]])
+                                    names(y) <- c(names(frequencia)[i], "Frequência","%")
+                                    return(y)
+                        }
+  )
+  names(frequencia2) <- names(frequencia)
+  
   
   invisible(list(Matriz = matriz,  Lista = lista, Frequencia = frequencia))
 }
